@@ -32,6 +32,17 @@ telescope.setup({
       '--line-number',
       '--column',
       '--smart-case',
+      '--hiden',
+
+      -- exlude some patterns from search
+      '--glob=!**/.git/*',
+      '--glob=!**/.idea/*',
+      '--glob=!**/.vscode/*',
+      '--glob=!**/build/*',
+      '--glob=!**/dist/*',
+      '--glob=!**/yarn.lock',
+      '--glob=!**/package-lock.json',
+      '--glob=!**/node_modules/*',
     },
     mappings = {
       i = {
@@ -45,6 +56,7 @@ telescope.setup({
     selection_strategy = 'reset',
     sorting_strategy = 'ascending',
     layout_strategy = 'horizontal',
+    -- file_ignore_patterns = { 'node_modules', '.git' },
     layout_config = {
       horizontal = {
         prompt_position = 'top',
@@ -103,6 +115,19 @@ telescope.setup({
     find_files = {
       theme = theme,
       hidden = true,
+      find_command = {
+        'rg',
+        '--files',
+        '--hidden',
+        '--glob=!**/.git/*',
+        '--glob=!**/.idea/*',
+        '--glob=!**/.vscode/*',
+        '--glob=!**/build/*',
+        '--glob=!**/dist/*',
+        '--glob=!**/yarn.lock',
+        '--glob=!**/package-lock.json',
+        '--glob=!**/node_modules/*',
+      },
     },
     oldfiles = {
       theme = theme,
