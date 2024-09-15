@@ -29,6 +29,12 @@ driver.add_plugin('nvim-telescope/telescope.nvim', {
   end,
 })
 
+driver.add_plugin('aznhe21/actions-preview.nvim', {
+  config = function()
+    require('components.editor.configs.actions-preview')
+  end,
+})
+
 driver.add_plugin('nvim-telescope/telescope-file-browser.nvim', {
   dependencies = { 'nvim-telescope/telescope.nvim' },
 })
@@ -145,39 +151,9 @@ driver.add_plugin('stevearc/conform.nvim', {
   event = { 'BufWritePre' },
   cmd = { 'ConformInfo' },
   branch = 'nvim-0.9',
-  keys = {
-    {
-      '<leader>f',
-      function()
-        require('conform').format({ async = true, lsp_format = 'fallback' })
-      end,
-      mode = '',
-      desc = '[F]ormat buffer',
-    },
-  },
-  opts = {
-    notify_on_error = false,
-    format_on_save = function(bufnr)
-      local disable_filetypes = { c = true, cpp = true }
-      local lsp_format_opt
-      if disable_filetypes[vim.bo[bufnr].filetype] then
-        lsp_format_opt = 'never'
-      else
-        lsp_format_opt = 'fallback'
-      end
-      return {
-        timeout_ms = 500,
-        lsp_format = lsp_format_opt,
-      }
-    end,
-    formatters_by_ft = {
-      lua = { 'stylua' },
-      go = { 'gofmt' },
-      terraform = { 'terraform_fmt' },
-      javascript = { 'prettierd', 'prettier', stop_after_first = true },
-      nix = { 'nixfmt' },
-    },
-  },
+  config = function()
+    require('components.editor.configs.conform')
+  end,
 })
 
 driver.add_plugin('lewis6991/hover.nvim', {
@@ -186,6 +162,17 @@ driver.add_plugin('lewis6991/hover.nvim', {
   end,
 })
 
+driver.add_plugin('mfussenegger/nvim-lint', {
+  config = function()
+    require('components.editor.configs.lint')
+  end,
+})
+
+driver.add_plugin('is0n/fm-nvim', {
+  config = function()
+    vim.keymap.set('n', '<leader>tf', ':Xplr<CR>', { desc = '[T]oggle [F]ile explorer' })
+  end,
+})
 --driver.add_plugin("akinsho/toggleterm.nvim", {
 --	config = function()
 --		require("components.editor.configs.toggleterm")

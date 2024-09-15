@@ -1,4 +1,5 @@
 local mason = require('mason')
+-- local mason_installer = require('mason-tool-installer')
 
 mason.setup({
   ui = {
@@ -13,11 +14,23 @@ mason.setup({
       cancel_installation = '<C-c>',
       apply_language_filter = '/',
     },
+    icons = {
+      package_installed = '✓',
+      package_pending = '➜',
+      package_uninstalled = '✗',
+    },
   },
 })
 
 require('mason-null-ls').setup({
-  ensure_installed = nil,
+  ensure_installed = {
+    'prettier',
+    'stylua',
+    'isort',
+    'black',
+    'pylint',
+    'eslint_d',
+  },
   automatic_installation = false,
   automatic_setup = true,
 })
@@ -106,6 +119,12 @@ local servers = {
     cmd = { 'nil' },
     filetypes = { 'nix' },
     root_dir = lspconfig.util.root_pattern('flake.nix', '.git'),
+  },
+  typos_lsp = {
+    cmd_env = { RUST_LOG = 'error' },
+    init_options = {
+      diagnosticSeverity = 'Error',
+    },
   },
 }
 
