@@ -1,1 +1,1 @@
-require('driver').startup()
+require('core')

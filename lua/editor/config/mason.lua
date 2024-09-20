@@ -130,8 +130,10 @@ local servers = {
 
 require('mason-lspconfig').setup_handlers({
   function(server_name) -- default handler (optional)
-    local opt = servers[server_name] or {}
-    opt = vim.tbl_deep_extend('force', {}, default_opt, opt)
-    lspconfig[server_name].setup(opt)
+    if server_name ~= 'rust_analyzer' then
+      local opt = servers[server_name] or {}
+      opt = vim.tbl_deep_extend('force', {}, default_opt, opt)
+      lspconfig[server_name].setup(opt)
+    end
   end,
 })

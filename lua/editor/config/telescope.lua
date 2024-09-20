@@ -32,6 +32,15 @@ telescope.setup({
       '--line-number',
       '--column',
       '--smart-case',
+      '--hidden',
+      '--glob=!**/.git/*',
+      '--glob=!**/.idea/*',
+      '--glob=!**/.vscode/*',
+      '--glob=!**/build/*',
+      '--glob=!**/dist/*',
+      '--glob=!**/yarn.lock',
+      '--glob=!**/package-lock.json',
+      '--glob=!**/node_modules/*',
     },
     mappings = {
       i = {
@@ -45,6 +54,7 @@ telescope.setup({
     selection_strategy = 'reset',
     sorting_strategy = 'ascending',
     layout_strategy = 'horizontal',
+    -- file_ignore_patterns = { 'node_modules', '.git' },
     layout_config = {
       horizontal = {
         prompt_position = 'top',
@@ -79,21 +89,17 @@ telescope.setup({
       theme = theme,
       mappings = {
         ['i'] = {
-          -- your custom insert mode mappings
           ['<C-h>'] = fb_actions.goto_parent_dir,
           ['<C-e>'] = fb_actions.rename,
           ['<C-c>'] = fb_actions.create,
         },
-        ['n'] = {
-          -- your custom normal mode mappings
-        },
       },
     },
     fzf = {
-      fuzzy = true, -- false will only do exact matching
-      override_generic_sorter = true, -- override the generic sorter
-      override_file_sorter = true, -- override the file sorter
-      case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = 'smart_case',
     },
     media_files = {
       filetypes = { 'png', 'webp', 'jpg', 'jpeg' },
@@ -107,6 +113,19 @@ telescope.setup({
     find_files = {
       theme = theme,
       hidden = true,
+      find_command = {
+        'rg',
+        '--files',
+        '--hidden',
+        '--glob=!**/.git/*',
+        '--glob=!**/.idea/*',
+        '--glob=!**/.vscode/*',
+        '--glob=!**/build/*',
+        '--glob=!**/dist/*',
+        '--glob=!**/yarn.lock',
+        '--glob=!**/package-lock.json',
+        '--glob=!**/node_modules/*',
+      },
     },
     oldfiles = {
       theme = theme,
@@ -116,7 +135,6 @@ telescope.setup({
       debounce = 100,
       theme = theme,
       on_input_filter_cb = function(prompt)
-        -- AND operator for live_grep like how fzf handles spaces with wildcards in rg
         return { prompt = prompt:gsub('%s', '.*') }
       end,
     },
@@ -150,3 +168,36 @@ telescope.setup({
 
 telescope.load_extension('projects')
 telescope.load_extension('file_browser')
+
+pcall(require('telescope').load_extension, 'fzf')
+pcall(require('telescope').load_extension, 'ui-select')
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+vim.keymap.set('n', '<leader>/', function()
+  builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
+    winblend = 10,
+    previewer = false,
+  }))
+end, { desc = '[/] Fuzzily search in current buffer' })
+
+vim.keymap.set('n', '<leader>s/', function()
+  builtin.live_grep({
+    grep_open_files = true,
+    prompt_title = 'Live Grep in Open Files',
+  })
+end, { desc = '[S]earch [/] in Open Files' })
+
+vim.keymap.set('n', '<leader>sn', function()
+  builtin.find_files({ cwd = vim.fn.stdpath('config') })
+end, { desc = '[S]earch [N]eovim files' })

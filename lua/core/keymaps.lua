@@ -28,4 +28,9 @@ api.nvim_create_autocmd('BufReadPost', {
   end,
 })
 vim.api.nvim_set_keymap('t', '<Leader><Esc>', [[<C-\><C-n>]], { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>ti', ':terminal<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+  'n',
+  '<Leader>tt',
+  ':terminal<CR>',
+  { noremap = true, silent = true, desc = '[T]oggle [T]erminal' }
+)

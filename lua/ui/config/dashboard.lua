@@ -13,7 +13,7 @@ db.setup({
       {
         icon = '  ',
         desc = 'Recent Files',
-        action = "lua require('functions').find_current_directory_files()",
+        action = "lua require('core.functions').find_current_directory_files()",
         shortcut = 'SPC f f',
       },
       {

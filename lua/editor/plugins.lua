@@ -1,12 +1,25 @@
-local driver = require('driver')
+local lazy = require('core.lazy')
 
-driver.add_plugin('ahmedkhalf/project.nvim', {
+lazy.add_plugin('lewis6991/impatient.nvim')
+
+lazy.add_plugin('nvim-lua/plenary.nvim', { lazy = true })
+
+lazy.add_plugin('antoinemadec/FixCursorHold.nvim', { event = 'VimEnter' })
+
+lazy.add_plugin('rcarriga/nvim-notify', {
+  event = 'BufRead',
   config = function()
-    require('components.editor.configs.project')
+    require('editor.config.notify')
   end,
 })
 
-driver.add_plugin('nvim-telescope/telescope.nvim', {
+lazy.add_plugin('ahmedkhalf/project.nvim', {
+  config = function()
+    require('editor.config.project')
+  end,
+})
+
+lazy.add_plugin('nvim-telescope/telescope.nvim', {
   event = 'VimEnter',
   branch = '0.1.x',
   dependencies = {
@@ -25,39 +38,37 @@ driver.add_plugin('nvim-telescope/telescope.nvim', {
   },
 
   config = function()
-    require('components.editor.configs.telescope')
+    require('editor.config.telescope')
   end,
 })
 
-driver.add_plugin('aznhe21/actions-preview.nvim', {
+lazy.add_plugin('aznhe21/actions-preview.nvim', {
   config = function()
-    require('components.editor.configs.actions-preview')
+    require('editor.config.actions-preview')
   end,
 })
 
-driver.add_plugin('nvim-telescope/telescope-file-browser.nvim', {
+lazy.add_plugin('nvim-telescope/telescope-file-browser.nvim', {
   dependencies = { 'nvim-telescope/telescope.nvim' },
 })
 
-driver.add_plugin('Bilal2453/luvit-meta', { lazy = true })
+lazy.add_plugin('Bilal2453/luvit-meta', { lazy = true })
 
-driver.add_plugin('williamboman/mason.nvim', {
+lazy.add_plugin('williamboman/mason.nvim', {
   dependencies = {
     { 'williamboman/mason-lspconfig.nvim', lazy = true },
     { 'neovim/nvim-lspconfig', lazy = true },
     { 'hrsh7th/cmp-nvim-lsp', lazy = true, dependencies = { 'hrsh7th/nvim-cmp' } },
-    -- { 'folke/neodev.nvim', lazy = true },
     { 'nvimtools/none-ls.nvim', lazy = true, event = { 'BufReadPost', 'BufNewFile' } },
     { 'jay-babu/mason-null-ls.nvim', lazy = true },
     { 'simrat39/inlay-hints.nvim', lazy = true },
-    { 'simrat39/rust-tools.nvim', lazy = true },
   },
   config = function()
-    require('components.editor.configs.mason')
+    require('editor.config.mason')
   end,
 })
 
-driver.add_plugin('hrsh7th/nvim-cmp', {
+lazy.add_plugin('hrsh7th/nvim-cmp', {
   event = 'InsertEnter',
   dependencies = {
     {
@@ -81,19 +92,23 @@ driver.add_plugin('hrsh7th/nvim-cmp', {
       end,
       lazy = true,
     },
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    'hrsh7th/cmp-vsnip',
+    'hrsh7th/nvim-cmp',
+    'hrsh7th/vim-vsnip',
   },
   config = function()
-    require('components.editor.configs.cmp')
+    require('editor.config.cmp')
   end,
 })
 
-driver.add_plugin('hrsh7th/cmp-nvim-lua', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
-driver.add_plugin('hrsh7th/cmp-buffer', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
-driver.add_plugin('hrsh7th/cmp-path', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
-driver.add_plugin('hrsh7th/cmp-cmdline', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
-driver.add_plugin('dmitmel/cmp-cmdline-history', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
+lazy.add_plugin('hrsh7th/cmp-nvim-lua', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
+lazy.add_plugin('hrsh7th/cmp-buffer', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
+lazy.add_plugin('hrsh7th/cmp-path', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
+lazy.add_plugin('hrsh7th/cmp-cmdline', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
+lazy.add_plugin('dmitmel/cmp-cmdline-history', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
 
-driver.add_plugin('folke/which-key.nvim', {
+lazy.add_plugin('folke/which-key.nvim', {
 
   event = 'VimEnter',
   opts = {
@@ -113,68 +128,89 @@ driver.add_plugin('folke/which-key.nvim', {
   },
 })
 
-driver.add_plugin('nvim-treesitter/nvim-treesitter', {
+lazy.add_plugin('nvim-treesitter/nvim-treesitter', {
   build = function()
     if #vim.api.nvim_list_uis() ~= 0 then
       vim.cmd('TSUpdate')
     end
   end,
   config = function()
-    require('components.editor.configs.treesitter')
+    require('editor.config.treesitter')
   end,
   event = { 'BufRead', 'BufNewFile' },
 })
-driver.add_plugin('nvim-treesitter/playground', {
+lazy.add_plugin('nvim-treesitter/playground', {
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   event = 'BufRead',
 })
-driver.add_plugin('nvim-treesitter/nvim-treesitter-textobjects', {
+lazy.add_plugin('nvim-treesitter/nvim-treesitter-textobjects', {
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   event = 'BufRead',
 })
-driver.add_plugin('RRethy/nvim-treesitter-textsubjects', {
-  dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  event = 'BufRead',
-})
-
-driver.add_plugin('JoosepAlviste/nvim-ts-context-commentstring', {
+lazy.add_plugin('RRethy/nvim-treesitter-textsubjects', {
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   event = 'BufRead',
 })
 
-driver.add_plugin('windwp/nvim-ts-autotag', {
+lazy.add_plugin('JoosepAlviste/nvim-ts-context-commentstring', {
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   event = 'BufRead',
 })
 
-driver.add_plugin('stevearc/conform.nvim', {
+lazy.add_plugin('windwp/nvim-ts-autotag', {
+  dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  event = 'BufRead',
+})
+
+lazy.add_plugin('stevearc/conform.nvim', {
   event = { 'BufWritePre' },
   cmd = { 'ConformInfo' },
   branch = 'nvim-0.9',
   config = function()
-    require('components.editor.configs.conform')
+    require('editor.config.conform')
   end,
 })
 
-driver.add_plugin('lewis6991/hover.nvim', {
+lazy.add_plugin('lewis6991/hover.nvim', {
   config = function()
-    require('components.editor.configs.hover')
+    require('editor.config.hover')
   end,
 })
 
-driver.add_plugin('mfussenegger/nvim-lint', {
+lazy.add_plugin('mfussenegger/nvim-lint', {
   config = function()
-    require('components.editor.configs.lint')
+    require('editor.config.lint')
   end,
 })
 
-driver.add_plugin('is0n/fm-nvim', {
+lazy.add_plugin('is0n/fm-nvim', {
   config = function()
     vim.keymap.set('n', '<leader>tf', ':Xplr<CR>', { desc = '[T]oggle [F]ile explorer' })
   end,
 })
---driver.add_plugin("akinsho/toggleterm.nvim", {
---	config = function()
---		require("components.editor.configs.toggleterm")
---	end,
---})
+
+lazy.add_plugin('folke/zen-mode.nvim', {
+  config = function()
+    require('editor.config.zen-mode')
+  end,
+})
+
+lazy.add_plugin('lewis6991/gitsigns.nvim', {
+  config = function()
+    require('editor.config.gitsigns')
+  end,
+})
+
+lazy.add_plugin('mrcjkb/rustaceanvim', {
+  version = '^5',
+  lazy = false,
+  config = function()
+    require('editor.config.rust')
+  end,
+})
+
+lazy.add_plugin('akinsho/toggleterm.nvim', {
+  config = function()
+    require('editor.config.toggleterm')
+  end,
+})
