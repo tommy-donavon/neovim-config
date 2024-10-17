@@ -1,5 +1,7 @@
 local mason = require('mason')
 -- local mason_installer = require('mason-tool-installer')
+local ih = require('inlay-hints')
+ih.setup()
 
 mason.setup({
   ui = {
@@ -97,6 +99,9 @@ local servers = {
   tsserver = {
     root_dir = lspconfig.util.root_pattern('tsconfig.json', 'package.json', '.git'),
   },
+  eslint = {
+    settings = { workingDirectories = { mode = 'auto' } },
+  },
   lua_ls = {
     settings = {
       Lua = {
@@ -126,14 +131,84 @@ local servers = {
       diagnosticSeverity = 'Error',
     },
   },
+  graphql = {
+    filetypes = { 'gql', 'graphql' },
+  },
+  gopls = {
+    on_attach = function(c, b)
+      ih.on_attach(c, b)
+    end,
+    settings = {
+      gopls = {
+        hints = {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          compositeLiteralTypes = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          -- parameterNames = true,
+          rangeVariableTypes = true,
+        },
+      },
+    },
+  },
+  ruby_lsp = {},
+  rubocop = {
+    cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
+    root_dir = lspconfig.util.root_pattern('Gemfile', '.git', '.'),
+  },
+  yamlls = {
+    settings = {
+      yaml = {
+        schemaStore = {
+          url = 'https://www.schemastore.org/api/json/catalog.json',
+          enable = true,
+        },
+        schemas = {
+          kubernetes = '*.yaml',
+          ['http://json.schemastore.org/github-workflow'] = '.github/workflows/*.{yml,yaml}',
+          ['https://atmos.tools/schemas/atmos/atmos-manifest/1.0/atmos-manifest.json'] = 'stacks/**/*.{yml,yaml}',
+          ['http://json.schemastore.org/github-action'] = '.github/action.{yml,yaml}',
+          ['http://json.schemastore.org/ansible-stable-2.9'] = 'roles/tasks/*.{yml,yaml}',
+          ['http://json.schemastore.org/circleciconfig'] = '.circleci/config.{yml,yaml}',
+          ['http://json.schemastore.org/chart'] = 'Chart.{yml,yaml}',
+          ['http://json.schemastore.org/kustomization'] = 'kustomization.{yml,yaml}',
+          -- ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api.{yml,yaml}",
+          ['https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json'] = 'docker-compose.{yml,yaml}',
+          ['https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json'] = '*flow*.{yml,yaml}',
+        },
+      },
+    },
+  },
 }
 
 require('mason-lspconfig').setup_handlers({
   function(server_name) -- default handler (optional)
     if server_name ~= 'rust_analyzer' then
+      print(server_name)
       local opt = servers[server_name] or {}
       opt = vim.tbl_deep_extend('force', {}, default_opt, opt)
       lspconfig[server_name].setup(opt)
     end
   end,
+})
+
+-- TODO setup non mason servers in a cleaner way
+require('lspconfig').solargraph.setup({
+
+  cmd = { os.getenv('HOME') .. '/.rbenv/shims/solargraph', 'stdio' },
+  root_dir = lspconfig.util.root_pattern('Gemfile', '.git', '.'),
+  filetypes = { 'ruby' },
+  settings = {
+    solargraph = {
+      autoformat = false,
+      formatting = false,
+      completion = true,
+      diagnostic = true,
+      folding = true,
+      references = true,
+      rename = true,
+      symbols = true,
+    },
+  },
 })

@@ -4,11 +4,13 @@ conform.setup({
   keys = {},
   formatters_by_ft = {
     lua = { 'stylua' },
-    go = { 'gofmt' },
+    -- go = { 'gofmt' },
     terraform = { 'terraform_fmt' },
-    javascript = { 'prettierd', 'prettier', stop_after_first = true },
-    typescript = { 'prettierd', 'prettier', stop_after_first = true },
+    javascript = { 'eslint_d', 'prettierd', 'prettier', stop_after_first = true },
+    typescript = { 'eslint_d', 'prettierd', 'prettier', stop_after_first = false },
     nix = { 'nixfmt' },
+    python = { 'black', stop_after_first = true },
+    ruby = { 'rubocop', 'solargraph' },
   },
   notify_on_error = false,
   format_on_save = function(bufnr)
@@ -20,7 +22,7 @@ conform.setup({
       lsp_format_opt = 'fallback'
     end
     return {
-      timeout_ms = 500,
+      -- timeout_ms = 500,
       lsp_format = lsp_format_opt,
     }
   end,

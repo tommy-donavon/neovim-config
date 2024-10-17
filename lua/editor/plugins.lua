@@ -139,14 +139,17 @@ lazy.add_plugin('nvim-treesitter/nvim-treesitter', {
   end,
   event = { 'BufRead', 'BufNewFile' },
 })
+
 lazy.add_plugin('nvim-treesitter/playground', {
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   event = 'BufRead',
 })
+
 lazy.add_plugin('nvim-treesitter/nvim-treesitter-textobjects', {
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   event = 'BufRead',
 })
+
 lazy.add_plugin('RRethy/nvim-treesitter-textsubjects', {
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   event = 'BufRead',
@@ -213,4 +216,18 @@ lazy.add_plugin('akinsho/toggleterm.nvim', {
   config = function()
     require('editor.config.toggleterm')
   end,
+})
+
+lazy.add_plugin('ray-x/go.nvim', {
+  dependencies = {
+    'ray-x/guihua.lua',
+    'neovim/nvim-lspconfig',
+    'nvim-treesitter/nvim-treesitter',
+  },
+  config = function()
+    require('editor.config.go')
+  end,
+  event = { 'CmdlineEnter' },
+  ft = { 'go', 'gomod' },
+  build = ':lua require("go.install").update_all_sync()',
 })
