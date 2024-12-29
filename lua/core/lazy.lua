@@ -24,14 +24,17 @@ function M.setup_plugins()
   local lazy_path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
   if not vim.loop.fs_stat(lazy_path) then
+    print('installing lazy.nvim')
     vim.fn.system({
       'git',
       'clone',
       '--filter=blob:none',
-      'https://github.com/foke/lazy.nvim.git',
+      '--depth=1',
+      'git@github.com:folke/lazy.nvim.git',
       '--branch=stable',
       lazy_path,
     })
+    print('done install lazy.nvim')
   end
   vim.opt.rtp:prepend(lazy_path)
   require('lazy').setup(plugins)

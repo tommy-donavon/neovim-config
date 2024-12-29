@@ -8,6 +8,8 @@ conform.setup({
     terraform = { 'terraform_fmt' },
     javascript = { 'eslint_d', 'prettierd', 'prettier', stop_after_first = true },
     typescript = { 'eslint_d', 'prettierd', 'prettier', stop_after_first = false },
+    elixir = { 'mix' },
+    json = { 'prettierd', 'prettier', stop_after_first = false },
     nix = { 'nixfmt' },
     python = { 'black', stop_after_first = true },
     ruby = { 'rubocop', 'solargraph' },

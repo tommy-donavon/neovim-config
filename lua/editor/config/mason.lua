@@ -131,6 +131,11 @@ local servers = {
       diagnosticSeverity = 'Error',
     },
   },
+  elixirls = {
+      cmd = {'elixir-ls'},
+      filetypes = { 'elixir' },
+      root_dir = lspconfig.util.root_pattern('mix.exs')
+  },
   graphql = {
     filetypes = { 'gql', 'graphql' },
   },
@@ -211,3 +216,7 @@ require('lspconfig').solargraph.setup({
     },
   },
 })
+
+require('lspconfig').gleam.setup({})
+
+require 'lspconfig'.zls.setup({})
