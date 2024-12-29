@@ -116,6 +116,11 @@ local servers = {
       diagnosticSeverity = 'Error',
     },
   },
+  elixirls = {
+      cmd = {'elixir-ls'},
+      filetypes = { 'elixir' },
+      root_dir = lspconfig.util.root_pattern('mix.exs')
+  },
   graphql = {
     filetypes = { 'gql', 'graphql' },
   },
