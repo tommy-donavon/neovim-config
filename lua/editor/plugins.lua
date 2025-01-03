@@ -8,9 +8,6 @@ lazy.add_plugin('antoinemadec/FixCursorHold.nvim', { event = 'VimEnter' })
 
 lazy.add_plugin('rcarriga/nvim-notify', {
   event = 'BufRead',
-  config = function()
-    require('editor.config.notify')
-  end,
 })
 
 lazy.add_plugin('ahmedkhalf/project.nvim', {

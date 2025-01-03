@@ -82,7 +82,6 @@ telescope.setup({
   },
   extensions = {
     ['ui-select'] = {
-      -- TODO: specify the cursor theme for codeaction only
       require('telescope.themes').get_cursor({}),
     },
     file_browser = {
@@ -104,6 +103,23 @@ telescope.setup({
     media_files = {
       filetypes = { 'png', 'webp', 'jpg', 'jpeg' },
       find_cmd = 'rg', -- find command (defaults to `fd`)
+    },
+
+    notify = {
+      stages = 'fade_in_slide_out',
+      on_open = nil,
+      on_close = nil,
+      render = 'default',
+      timeout = 5000,
+      background_colour = 'Normal',
+      minimum_width = 50,
+      icons = {
+        ERROR = '',
+        WARN = '',
+        INFO = '',
+        DEBUG = '',
+        TRACE = '✎',
+      },
     },
   },
   pickers = {
@@ -168,6 +184,9 @@ telescope.setup({
 
 telescope.load_extension('projects')
 telescope.load_extension('file_browser')
+
+telescope.load_extension('notify')
+vim.notify = require('notify')
 
 pcall(require('telescope').load_extension, 'fzf')
 pcall(require('telescope').load_extension, 'ui-select')

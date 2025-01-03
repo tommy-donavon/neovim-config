@@ -125,6 +125,12 @@ local servers = {
     filetypes = { 'nix' },
     root_dir = lspconfig.util.root_pattern('flake.nix', '.git'),
   },
+  elixirls = {
+    cmd = { 'elixir-ls' },
+    filetypes = { 'elixir' },
+    root_dir = lspconfig.util.root_pattern('mix.exs', '.git'),
+  },
+
   typos_lsp = {
     cmd_env = { RUST_LOG = 'error' },
     init_options = {
