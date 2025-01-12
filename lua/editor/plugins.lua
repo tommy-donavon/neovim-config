@@ -72,7 +72,7 @@ lazy.add_plugin('hrsh7th/nvim-cmp', {
       'L3MON4D3/LuaSnip',
       build = 'make install_jsregexp',
       lazy = false,
-      version = "v2.3.0",
+      version = 'v2.3.0',
       cond = function()
         return vim.fn.executable('make') == 1
       end,
@@ -226,7 +226,9 @@ lazy.add_plugin('ray-x/go.nvim', {
 })
 
 lazy.add_plugin('iamcco/markdown-preview.nvim', {
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function() vim.fn["mkdp#util#install"]() end,
+  cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+  ft = { 'markdown' },
+  build = function()
+    vim.fn['mkdp#util#install']()
+  end,
 })

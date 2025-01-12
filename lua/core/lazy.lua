@@ -34,7 +34,7 @@ function M.setup_plugins()
       '--branch=stable',
       lazy_path,
     })
-    print('done install lazy.nvim')
+    print('lazy.nvim installation complete')
   end
   vim.opt.rtp:prepend(lazy_path)
   require('lazy').setup(plugins)

@@ -15,7 +15,7 @@ conform.setup({
     python = { 'black', stop_after_first = true },
     ruby = { 'rubocop', 'solargraph' },
   },
-  notify_on_error = false,
+  notify_on_error = true,
   format_on_save = function(bufnr)
     local disable_filetypes = { c = true, cpp = true }
     local lsp_format_opt

@@ -116,11 +116,6 @@ local servers = {
       diagnosticSeverity = 'Error',
     },
   },
-  elixirls = {
-      cmd = {'elixir-ls'},
-      filetypes = { 'elixir' },
-      root_dir = lspconfig.util.root_pattern('mix.exs')
-  },
   graphql = {
     filetypes = { 'gql', 'graphql' },
   },
@@ -218,3 +213,6 @@ lspconfig.lua_ls.setup({
     },
   },
 })
+
+lspconfig.gleam.setup({})
+lspconfig.zls.setup({})
