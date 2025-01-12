@@ -1,6 +1,6 @@
 local conform = require('conform')
 
-conform.setup({
+conform.setup {
   keys = {},
   formatters_by_ft = {
     lua = { 'stylua' },
@@ -29,16 +29,16 @@ conform.setup({
       lsp_format = lsp_format_opt,
     }
   end,
-})
+}
 
 vim.keymap.set({ 'n', 'v' }, '<leader>mf', function()
-  conform.format({
+  conform.format {
     lsp_fallback = true,
     async = false,
     timeout_ms = 500,
-  })
+  }
 end, { desc = '[F]ormat file or range (in visual mode)' })
 
 vim.keymap.set('n', '<leader>f', function()
-  conform.format({ async = true, lsp_format = 'fallback' })
+  conform.format { async = true, lsp_format = 'fallback' }
 end)

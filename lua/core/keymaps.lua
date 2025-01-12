@@ -27,10 +27,14 @@ api.nvim_create_autocmd('BufReadPost', {
     end
   end,
 })
-vim.api.nvim_set_keymap('t', '<Leader><Esc>', [[<C-\><C-n>]], { noremap = true })
+
+vim.api.nvim_set_keymap('t', '<leader><Esc>', [[<C-\><C-n>]], { noremap = true })
+
 vim.api.nvim_set_keymap(
   'n',
-  '<Leader>tt',
+  '<leader>tt',
   ':terminal<CR>',
   { noremap = true, silent = true, desc = '[T]oggle [T]erminal' }
 )
+
+vim.api.nvim_set_keymap('n', '<leader>sv', ':source $MYVIMRC<CR>', { desc = '[S]ource [V]imrc', noremap = true })

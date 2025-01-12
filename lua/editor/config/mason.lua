@@ -1,8 +1,8 @@
-local mason = require('mason')
 local ih = require('inlay-hints')
+local mason = require('mason')
 ih.setup()
 
-mason.setup({
+mason.setup {
   ui = {
     keymaps = {
       toggle_package_expand = '<CR>',
@@ -21,9 +21,9 @@ mason.setup({
       package_uninstalled = '✗',
     },
   },
-})
+}
 
-require('mason-null-ls').setup({
+require('mason-null-ls').setup {
   ensure_installed = {
     'prettier',
     'isort',
@@ -33,7 +33,7 @@ require('mason-null-ls').setup({
   },
   automatic_installation = false,
   automatic_setup = true,
-})
+}
 require('null-ls').setup()
 require('mason-lspconfig').setup()
 
@@ -165,7 +165,7 @@ local servers = {
   },
 }
 
-require('mason-lspconfig').setup_handlers({
+require('mason-lspconfig').setup_handlers {
   function(server_name) -- default handler (optional)
     if server_name ~= 'rust_analyzer' then
       local opt = servers[server_name] or {}
@@ -173,9 +173,9 @@ require('mason-lspconfig').setup_handlers({
       lspconfig[server_name].setup(opt)
     end
   end,
-})
+}
 
-lspconfig.solargraph.setup({
+lspconfig.solargraph.setup {
   cmd = { os.getenv('HOME') .. '/.rbenv/shims/solargraph', 'stdio' },
   root_dir = lspconfig.util.root_pattern('Gemfile', '.git', '.'),
   filetypes = { 'ruby' },
@@ -191,9 +191,9 @@ lspconfig.solargraph.setup({
       symbols = true,
     },
   },
-})
+}
 
-lspconfig.lua_ls.setup({
+lspconfig.lua_ls.setup {
   cmd = { 'lua-language-server' },
   filetypes = { 'lua' },
   settings = {
@@ -212,7 +212,7 @@ lspconfig.lua_ls.setup({
       },
     },
   },
-})
+}
 
-lspconfig.gleam.setup({})
-lspconfig.zls.setup({})
+lspconfig.gleam.setup {}
+lspconfig.zls.setup {}

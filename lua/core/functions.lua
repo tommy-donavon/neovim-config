@@ -5,7 +5,7 @@ function M.find_current_directory_files()
   if dir == '' then
     dir = vim.fn.getcwd()
   end
-  local opts = require('telescope.themes').get_ivy({})
+  local opts = require('telescope.themes').get_ivy {}
   opts = vim.tbl_extend('force', opts, {
     path = dir,
     prompt_title = 'Files in ' .. dir,

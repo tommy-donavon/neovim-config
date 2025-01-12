@@ -16,6 +16,12 @@ lazy.add_plugin('ahmedkhalf/project.nvim', {
   end,
 })
 
+lazy.add_plugin('nvim-tree/nvim-tree.lua', {
+  config = function()
+    require('editor.config.nvim-tree')
+  end,
+})
+
 lazy.add_plugin('nvim-telescope/telescope.nvim', {
   event = 'VimEnter',
   branch = '0.1.x',
@@ -85,9 +91,9 @@ lazy.add_plugin('hrsh7th/nvim-cmp', {
       branch = 'master',
       config = function()
         local autopairs = require('nvim-autopairs')
-        autopairs.setup({
+        autopairs.setup {
           disable_filetype = { 'TelescopePrompt', 'vim' },
-        })
+        }
       end,
       lazy = true,
     },
@@ -187,7 +193,7 @@ lazy.add_plugin('mfussenegger/nvim-lint', {
 
 lazy.add_plugin('is0n/fm-nvim', {
   config = function()
-    vim.keymap.set('n', '<leader>tf', ':Xplr<CR>', { desc = '[T]oggle [F]ile explorer' })
+    vim.keymap.set('n', '<leader>tg', ':Lazygit<CR>', { desc = '[T]oggle Lazy [G]it' })
   end,
 })
 

@@ -1,6 +1,6 @@
 local home = os.getenv('HOME')
 local db = require('dashboard')
-db.setup({
+db.setup {
   theme = 'doom',
   config = {
     center = {
@@ -36,4 +36,4 @@ db.setup({
     file_height = 24,
     file_width = 64,
   },
-})
+}

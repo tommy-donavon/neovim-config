@@ -1,4 +1,4 @@
-require('smear_cursor').setup({
+require('smear_cursor').setup {
   legacy_computing_symbols_support = true,
   scroll_buffer_space = true,
   smear_between_buffers = true,
@@ -8,4 +8,4 @@ require('smear_cursor').setup({
   trailing_stiffness = 0.5,
   distance_stop_animating = 0.5,
   hide_target_hack = false,
-})
+}

@@ -22,7 +22,7 @@ end
 
 local theme = 'ivy'
 
-telescope.setup({
+telescope.setup {
   defaults = {
     vimgrep_arguments = {
       'rg',
@@ -82,7 +82,7 @@ telescope.setup({
   },
   extensions = {
     ['ui-select'] = {
-      require('telescope.themes').get_cursor({}),
+      require('telescope.themes').get_cursor {},
     },
     file_browser = {
       theme = theme,
@@ -180,7 +180,7 @@ telescope.setup({
       initial_mode = 'normal',
     },
   },
-})
+}
 
 telescope.load_extension('projects')
 telescope.load_extension('file_browser')
@@ -204,21 +204,21 @@ vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Fi
 vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
 vim.keymap.set('n', '<leader>/', function()
-  builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
+  builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
     previewer = false,
-  }))
+  })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
 vim.keymap.set('n', '<leader>s/', function()
-  builtin.live_grep({
+  builtin.live_grep {
     grep_open_files = true,
     prompt_title = 'Live Grep in Open Files',
-  })
+  }
 end, { desc = '[S]earch [/] in Open Files' })
 
 vim.keymap.set('n', '<leader>sn', function()
-  builtin.find_files({ cwd = vim.fn.stdpath('config') })
+  builtin.find_files { cwd = vim.fn.stdpath('config') }
 end, { desc = '[S]earch [N]eovim files' })
 
 vim.keymap.set('n', '<leader>fd', function()
