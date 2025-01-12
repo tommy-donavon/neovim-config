@@ -41,6 +41,7 @@ lazy.add_plugin('nvim-telescope/telescope.nvim', {
   },
 
   config = function()
+    ---@diagnostic disable-next-line: different-requires
     require('editor.config.telescope')
   end,
 })

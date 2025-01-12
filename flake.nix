@@ -34,6 +34,7 @@
               nil
               nixfmt-rfc-style
               just
+              tokei
 
               lua
               lua-language-server

@@ -5,6 +5,7 @@ default:
 [doc('Analyze lua code')]
 check:
     @luacheck --globals vim -- lua
+    @tokei lua
 
 [doc('Lint lua code')]
 lint:
