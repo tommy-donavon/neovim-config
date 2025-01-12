@@ -44,7 +44,7 @@
             ];
 
             shellHook = ''
-              cog install-hook --all
+              cog install-hook --all -o
             '';
           };
         }

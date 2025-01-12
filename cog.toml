@@ -1,3 +1,8 @@
+branch_whitelist = [
+    "main"
+]
+skip_ci = "[skip-ci]"
+
 [git_hooks.commit-msg]
 script = """#!/bin/sh
 set -e
