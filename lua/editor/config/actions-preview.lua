@@ -1,6 +1,6 @@
 local actions_preview = require('actions-preview')
 
-actions_preview.setup({
+actions_preview.setup {
   telescope = {
     sorting_strategy = 'ascending',
     layout_strategy = 'vertical',
@@ -14,6 +14,6 @@ actions_preview.setup({
       end,
     },
   },
-})
+}
 
 vim.keymap.set({ 'v', 'n' }, 'gf', require('actions-preview').code_actions)

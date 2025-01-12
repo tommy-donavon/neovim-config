@@ -1,4 +1,4 @@
-require('hover').setup({
+require('hover').setup {
   init = function()
     require('hover.providers.lsp')
   end,
@@ -8,7 +8,7 @@ require('hover').setup({
   title = true,
   mouse_providers = { 'LSP' },
   mouse_delay = 1000,
-})
+}
 
 vim.keymap.set('n', 'K', require('hover').hover, { desc = 'hover.nvim' })
 vim.keymap.set('n', 'gK', require('hover').hover_select, { desc = 'hover.nvim (select)' })
