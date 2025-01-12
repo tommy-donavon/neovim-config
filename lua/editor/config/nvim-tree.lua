@@ -1,4 +1,4 @@
-vim.keymap.set('n', '<leader>tf', ':NvimTreeToggle<CR>', { desc = '[T]oggle [F]ile explorer' })
+vim.keymap.set('n', '<leader>tf', ':NvimTreeToggle<CR>', { desc = '[T]oggle [F]ile explorer', silent = true })
 
 require('nvim-tree').setup {
   sort = {
