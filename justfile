@@ -2,15 +2,18 @@
 default:
     @just --list
 
-[doc('Analyze lua code')]
+# analyze lua code
+[group('dev')]
 check:
     @luacheck --globals vim -- lua
     @tokei lua
 
-[doc('Lint lua code')]
+# lint lua code
+[group('dev')]
 lint:
     @stylua lua -c
 
-[doc('Lint and apply possible fixes to lua code')]
+# lint and apply possible fixes to lua code
+[group('dev')]
 lint-fix:
     @stylua lua

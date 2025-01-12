@@ -1,0 +1,20 @@
+[git_hooks.commit-msg]
+script = """#!/bin/sh
+set -e
+cog verify --file $1
+cog check
+"""
+
+[git_hooks.pre-push]
+script = """#!/bin/sh
+set -e
+just lint
+"""
+
+[changelog]
+path = "CHANGELOG.md"
+template = "full_hash"
+authors = [
+    { username = "tommy-donavon", signature = "Tommy Donavon" }
+]
+

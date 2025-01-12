@@ -35,12 +35,17 @@
               nixfmt-rfc-style
               just
               tokei
+              cocogitto
 
               lua
               lua-language-server
               stylua
               luajitPackages.luacheck
             ];
+
+            shellHook = ''
+              cog install-hook --all
+            '';
           };
         }
       );
