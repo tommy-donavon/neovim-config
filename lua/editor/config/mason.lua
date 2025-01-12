@@ -119,23 +119,6 @@ local servers = {
   graphql = {
     filetypes = { 'gql', 'graphql' },
   },
-  gopls = {
-    on_attach = function(c, b)
-      ih.on_attach(c, b)
-    end,
-    settings = {
-      gopls = {
-        hints = {
-          assignVariableTypes = true,
-          compositeLiteralFields = true,
-          compositeLiteralTypes = true,
-          constantValues = true,
-          functionTypeParameters = true,
-          rangeVariableTypes = true,
-        },
-      },
-    },
-  },
   ruby_lsp = {},
   rubocop = {
     cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
@@ -209,6 +192,26 @@ lspconfig.lua_ls.setup {
           vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy',
           '${3rd}/luv/library',
         },
+      },
+    },
+  },
+}
+
+lspconfig.gopls.setup {
+  cmd = { 'gopls' },
+  filetypes = { 'go', 'gomod' },
+  on_attach = function(c, b)
+    ih.on_attach(c, b)
+  end,
+  settings = {
+    gopls = {
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        rangeVariableTypes = true,
       },
     },
   },
