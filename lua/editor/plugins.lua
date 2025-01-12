@@ -209,12 +209,6 @@ lazy.add_plugin('mrcjkb/rustaceanvim', {
   end,
 })
 
-lazy.add_plugin('akinsho/toggleterm.nvim', {
-  config = function()
-    require('editor.config.toggleterm')
-  end,
-})
-
 lazy.add_plugin('ray-x/go.nvim', {
   dependencies = {
     'ray-x/guihua.lua',

@@ -7,6 +7,21 @@ lazy.add_plugin('nvimdev/dashboard-nvim', {
   end,
 })
 
+lazy.add_plugin('nvim-lualine/lualine.nvim', {
+  dependencies = {
+    'nvim-tree/nvim-web-devicons',
+  },
+  config = function()
+    require('ui.config.lualine')
+  end,
+})
+
+lazy.add_plugin('sphamba/smear-cursor.nvim', {
+  config = function()
+    require('ui.config.smear')
+  end,
+})
+
 lazy.add_plugin('catppuccin/nvim', {
   priority = 1000,
 })

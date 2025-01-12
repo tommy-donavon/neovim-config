@@ -1,5 +1,4 @@
 local mason = require('mason')
--- local mason_installer = require('mason-tool-installer')
 local ih = require('inlay-hints')
 ih.setup()
 
@@ -27,7 +26,6 @@ mason.setup({
 require('mason-null-ls').setup({
   ensure_installed = {
     'prettier',
-    'stylua',
     'isort',
     'black',
     'pylint',
@@ -66,7 +64,7 @@ if not lspconfig_configs.ls_emmet then
         'handlebars',
       },
       ---@diagnostic disable-next-line: unused-local
-      root_dir = function(fname)
+      root_dir = function()
         return vim.loop.cwd()
       end,
       settings = {},
@@ -79,7 +77,7 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 ---@diagnostic disable-next-line: unused-local
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
@@ -102,24 +100,6 @@ local servers = {
   eslint = {
     settings = { workingDirectories = { mode = 'auto' } },
   },
-  lua_ls = {
-    settings = {
-      Lua = {
-        runtime = {
-          version = 'LuaJIT',
-          special = { reload = 'require' },
-        },
-        workspace = {
-          library = {
-            vim.fn.expand('$VIMRUNTIME/lua'),
-            vim.fn.expand('$VIMRUNTIME/lua/vim/lsp'),
-            vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy',
-            '${3rd}/luv/library',
-          },
-        },
-      },
-    },
-  },
   nil_ls = {
     cmd = { 'nil' },
     filetypes = { 'nix' },
@@ -130,7 +110,6 @@ local servers = {
     filetypes = { 'elixir' },
     root_dir = lspconfig.util.root_pattern('mix.exs', '.git'),
   },
-
   typos_lsp = {
     cmd_env = { RUST_LOG = 'error' },
     init_options = {
@@ -152,7 +131,6 @@ local servers = {
           compositeLiteralTypes = true,
           constantValues = true,
           functionTypeParameters = true,
-          -- parameterNames = true,
           rangeVariableTypes = true,
         },
       },
@@ -179,7 +157,6 @@ local servers = {
           ['http://json.schemastore.org/circleciconfig'] = '.circleci/config.{yml,yaml}',
           ['http://json.schemastore.org/chart'] = 'Chart.{yml,yaml}',
           ['http://json.schemastore.org/kustomization'] = 'kustomization.{yml,yaml}',
-          -- ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api.{yml,yaml}",
           ['https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json'] = 'docker-compose.{yml,yaml}',
           ['https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json'] = '*flow*.{yml,yaml}',
         },
@@ -198,9 +175,7 @@ require('mason-lspconfig').setup_handlers({
   end,
 })
 
--- TODO setup non mason servers in a cleaner way
-require('lspconfig').solargraph.setup({
-
+lspconfig.solargraph.setup({
   cmd = { os.getenv('HOME') .. '/.rbenv/shims/solargraph', 'stdio' },
   root_dir = lspconfig.util.root_pattern('Gemfile', '.git', '.'),
   filetypes = { 'ruby' },
@@ -214,6 +189,27 @@ require('lspconfig').solargraph.setup({
       references = true,
       rename = true,
       symbols = true,
+    },
+  },
+})
+
+lspconfig.lua_ls.setup({
+  cmd = { 'lua-language-server' },
+  filetypes = { 'lua' },
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+        special = { reload = 'require' },
+      },
+      workspace = {
+        library = {
+          vim.fn.expand('$VIMRUNTIME/lua'),
+          vim.fn.expand('$VIMRUNTIME/lua/vim/lsp'),
+          vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy',
+          '${3rd}/luv/library',
+        },
+      },
     },
   },
 })
