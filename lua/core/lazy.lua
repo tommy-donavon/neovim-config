@@ -13,7 +13,7 @@ function M.add_plugin(name, opts)
   plugins_seen[name] = true
 end
 
-function load_sub_components(ext)
+local function load_sub_components(ext)
   for _, m in ipairs(utils.find_modules(utils.script_path(), ext .. '.lua')) do
     require(m .. '.' .. ext)
   end

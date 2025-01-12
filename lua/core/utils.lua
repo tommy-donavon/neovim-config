@@ -1,6 +1,6 @@
 local M = {}
 
-function M.script_path ()
+function M.script_path()
   local str = debug.getinfo(2, 'S').source:sub(2)
   return str:match('(.*/)') or '.'
 end
@@ -26,6 +26,5 @@ function M.find_modules(baseDir, targetFile)
   scan_directory(baseDir)
   return modules
 end
-
 
 return M
