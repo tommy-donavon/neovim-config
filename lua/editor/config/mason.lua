@@ -213,3 +213,6 @@ lspconfig.lua_ls.setup({
     },
   },
 })
+
+lspconfig.gleam.setup({})
+lspconfig.zls.setup({})
