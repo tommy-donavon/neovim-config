@@ -1,0 +1,17 @@
+name: analysis
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: LuaCheck
+        uses: lunarmodules/luacheck@v1
+        with:
+          args: --globals vim -- lua
