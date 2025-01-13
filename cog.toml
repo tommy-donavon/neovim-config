@@ -20,6 +20,6 @@ just lint
 path = "CHANGELOG.md"
 template = "full_hash"
 authors = [
-    { username = "tommy-donavon", signature = "Tommy Donavon" }
+    { username = "tommy-donavon", signature = "Tommy" }
 ]
 
