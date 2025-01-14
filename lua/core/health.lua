@@ -4,6 +4,7 @@ M.loaded = false
 local deps = {
   'lazygit',
   'rg',
+  'freeze',
 }
 
 M.check = function()

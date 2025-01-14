@@ -22,6 +22,12 @@ lazy.add_plugin('sphamba/smear-cursor.nvim', {
   end,
 })
 
+lazy.add_plugin('charm-and-friends/freeze.nvim', {
+  config = function()
+    require('ui.config.freeze')
+  end,
+})
+
 lazy.add_plugin('catppuccin/nvim', {
   priority = 1000,
 })

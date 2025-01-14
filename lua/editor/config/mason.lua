@@ -197,6 +197,8 @@ lspconfig.lua_ls.setup {
   },
 }
 
+lspconfig.golangci_lint_ls.setup {}
+
 lspconfig.gopls.setup {
   cmd = { 'gopls' },
   filetypes = { 'go', 'gomod' },
