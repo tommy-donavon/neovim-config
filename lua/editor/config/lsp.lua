@@ -1,44 +1,8 @@
 local ih = require('inlay-hints')
-local mason = require('mason')
-ih.setup()
-
-mason.setup {
-  ui = {
-    keymaps = {
-      toggle_package_expand = '<CR>',
-      install_package = 'i',
-      update_package = 'u',
-      check_package_version = 'c',
-      update_all_packages = 'U',
-      check_outdated_packages = 'C',
-      uninstall_package = 'X',
-      cancel_installation = '<C-c>',
-      apply_language_filter = '/',
-    },
-    icons = {
-      package_installed = '✓',
-      package_pending = '➜',
-      package_uninstalled = '✗',
-    },
-  },
-}
-
-require('mason-null-ls').setup {
-  ensure_installed = {
-    'prettier',
-    'isort',
-    'black',
-    'pylint',
-    'eslint_d',
-  },
-  automatic_installation = false,
-  automatic_setup = true,
-}
-require('null-ls').setup()
-require('mason-lspconfig').setup()
-
 local lspconfig = require('lspconfig')
 local lspconfig_configs = require('lspconfig.configs')
+ih.setup()
+
 if not lspconfig_configs.ls_emmet then
   lspconfig_configs.ls_emmet = {
     default_config = {
@@ -73,7 +37,7 @@ if not lspconfig_configs.ls_emmet then
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 ---@diagnostic disable-next-line: unused-local
@@ -94,7 +58,27 @@ local default_opt = {
 }
 
 local servers = {
-  tsserver = {
+  lua_ls = {
+    cmd = { 'lua-language-server' },
+    filetypes = { 'lua' },
+    settings = {
+      Lua = {
+        runtime = {
+          version = 'LuaJIT',
+          special = { reload = 'require' },
+        },
+        workspace = {
+          library = {
+            vim.fn.expand('$VIMRUNTIME/lua'),
+            vim.fn.expand('$VIMRUNTIME/lua/vim/lsp'),
+            vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy',
+            '${3rd}/luv/library',
+          },
+        },
+      },
+    },
+  },
+  ts_ls = {
     root_dir = lspconfig.util.root_pattern('tsconfig.json', 'package.json', '.git'),
   },
   eslint = {
@@ -116,13 +100,51 @@ local servers = {
       diagnosticSeverity = 'Error',
     },
   },
+  gleam = {},
   graphql = {
     filetypes = { 'gql', 'graphql' },
+  },
+  golangci_lint_ls = {},
+  gopls = {
+    cmd = { 'gopls' },
+    filetypes = { 'go', 'gomod' },
+    on_attach = function(c, b)
+      ih.on_attach(c, b)
+    end,
+    settings = {
+      gopls = {
+        hints = {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          compositeLiteralTypes = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          rangeVariableTypes = true,
+        },
+      },
+    },
   },
   ruby_lsp = {},
   rubocop = {
     cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
     root_dir = lspconfig.util.root_pattern('Gemfile', '.git', '.'),
+  },
+  solargraph = {
+    cmd = { os.getenv('HOME') .. '/.rbenv/shims/solargraph', 'stdio' },
+    root_dir = lspconfig.util.root_pattern('Gemfile', '.git', '.'),
+    filetypes = { 'ruby' },
+    settings = {
+      solargraph = {
+        autoformat = false,
+        formatting = false,
+        completion = true,
+        diagnostic = true,
+        folding = true,
+        references = true,
+        rename = true,
+        symbols = true,
+      },
+    },
   },
   yamlls = {
     settings = {
@@ -146,78 +168,10 @@ local servers = {
       },
     },
   },
+  zls = {},
 }
 
-require('mason-lspconfig').setup_handlers {
-  function(server_name) -- default handler (optional)
-    if server_name ~= 'rust_analyzer' then
-      local opt = servers[server_name] or {}
-      opt = vim.tbl_deep_extend('force', {}, default_opt, opt)
-      lspconfig[server_name].setup(opt)
-    end
-  end,
-}
-
-lspconfig.solargraph.setup {
-  cmd = { os.getenv('HOME') .. '/.rbenv/shims/solargraph', 'stdio' },
-  root_dir = lspconfig.util.root_pattern('Gemfile', '.git', '.'),
-  filetypes = { 'ruby' },
-  settings = {
-    solargraph = {
-      autoformat = false,
-      formatting = false,
-      completion = true,
-      diagnostic = true,
-      folding = true,
-      references = true,
-      rename = true,
-      symbols = true,
-    },
-  },
-}
-
-lspconfig.lua_ls.setup {
-  cmd = { 'lua-language-server' },
-  filetypes = { 'lua' },
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT',
-        special = { reload = 'require' },
-      },
-      workspace = {
-        library = {
-          vim.fn.expand('$VIMRUNTIME/lua'),
-          vim.fn.expand('$VIMRUNTIME/lua/vim/lsp'),
-          vim.fn.stdpath('data') .. '/lazy/lazy.nvim/lua/lazy',
-          '${3rd}/luv/library',
-        },
-      },
-    },
-  },
-}
-
-lspconfig.golangci_lint_ls.setup {}
-
-lspconfig.gopls.setup {
-  cmd = { 'gopls' },
-  filetypes = { 'go', 'gomod' },
-  on_attach = function(c, b)
-    ih.on_attach(c, b)
-  end,
-  settings = {
-    gopls = {
-      hints = {
-        assignVariableTypes = true,
-        compositeLiteralFields = true,
-        compositeLiteralTypes = true,
-        constantValues = true,
-        functionTypeParameters = true,
-        rangeVariableTypes = true,
-      },
-    },
-  },
-}
-
-lspconfig.gleam.setup {}
-lspconfig.zls.setup {}
+for server, opt in pairs(servers) do
+  opt = vim.tbl_deep_extend('force', {}, default_opt, opt)
+  lspconfig[server].setup(opt)
+end

@@ -6,6 +6,22 @@ lazy.add_plugin('nvim-lua/plenary.nvim', { lazy = true })
 
 lazy.add_plugin('antoinemadec/FixCursorHold.nvim', { event = 'VimEnter' })
 
+lazy.add_plugin('saghen/blink.cmp', {
+  dependencies = { 'rafamadriz/friendly-snippets' },
+  version = '*',
+  config = function()
+    require('editor.config.blink')
+  end,
+  opts_extend = { 'sources.default' },
+})
+
+lazy.add_plugin('folke/snacks.nvim', {
+  lazy = false,
+  config = function()
+    require('editor.config.snacks')
+  end,
+})
+
 lazy.add_plugin('rcarriga/nvim-notify', {
   event = 'BufRead',
 })
@@ -13,12 +29,6 @@ lazy.add_plugin('rcarriga/nvim-notify', {
 lazy.add_plugin('ahmedkhalf/project.nvim', {
   config = function()
     require('editor.config.project')
-  end,
-})
-
-lazy.add_plugin('nvim-tree/nvim-tree.lua', {
-  config = function()
-    require('editor.config.nvim-tree')
   end,
 })
 
@@ -58,61 +68,21 @@ lazy.add_plugin('nvim-telescope/telescope-file-browser.nvim', {
 
 lazy.add_plugin('Bilal2453/luvit-meta', { lazy = true })
 
-lazy.add_plugin('williamboman/mason.nvim', {
+lazy.add_plugin('neovim/nvim-lspconfig', {
+  lazy = true,
   dependencies = {
-    { 'williamboman/mason-lspconfig.nvim', lazy = true },
-    { 'neovim/nvim-lspconfig', lazy = true },
-    { 'hrsh7th/cmp-nvim-lsp', lazy = true, dependencies = { 'hrsh7th/nvim-cmp' } },
-    { 'nvimtools/none-ls.nvim', lazy = true, event = { 'BufReadPost', 'BufNewFile' } },
-    { 'jay-babu/mason-null-ls.nvim', lazy = true },
     { 'simrat39/inlay-hints.nvim', lazy = true },
+    { 'nvimtools/none-ls.nvim', lazy = true, event = { 'BufReadPost', 'BufNewFile' } },
   },
   config = function()
-    require('editor.config.mason')
+    require('editor.config.lsp')
   end,
 })
 
-lazy.add_plugin('hrsh7th/nvim-cmp', {
+lazy.add_plugin('windwp/nvim-autopairs', {
   event = 'InsertEnter',
-  dependencies = {
-    {
-      'L3MON4D3/LuaSnip',
-      build = 'make install_jsregexp',
-      lazy = false,
-      version = 'v2.3.0',
-      cond = function()
-        return vim.fn.executable('make') == 1
-      end,
-    },
-    'saadparwaiz1/cmp_luasnip',
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-path',
-    {
-      'windwp/nvim-autopairs',
-      branch = 'master',
-      config = function()
-        local autopairs = require('nvim-autopairs')
-        autopairs.setup {
-          disable_filetype = { 'TelescopePrompt', 'vim' },
-        }
-      end,
-      lazy = true,
-    },
-    'hrsh7th/cmp-nvim-lsp-signature-help',
-    'hrsh7th/cmp-vsnip',
-    'hrsh7th/nvim-cmp',
-    'hrsh7th/vim-vsnip',
-  },
-  config = function()
-    require('editor.config.cmp')
-  end,
+  config = true,
 })
-
-lazy.add_plugin('hrsh7th/cmp-nvim-lua', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
-lazy.add_plugin('hrsh7th/cmp-buffer', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
-lazy.add_plugin('hrsh7th/cmp-path', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
-lazy.add_plugin('hrsh7th/cmp-cmdline', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
-lazy.add_plugin('dmitmel/cmp-cmdline-history', { dependencies = { 'hrsh7th/nvim-cmp' }, event = 'BufRead' })
 
 lazy.add_plugin('folke/which-key.nvim', {
 
@@ -189,18 +159,6 @@ lazy.add_plugin('lewis6991/hover.nvim', {
 lazy.add_plugin('mfussenegger/nvim-lint', {
   config = function()
     require('editor.config.lint')
-  end,
-})
-
-lazy.add_plugin('is0n/fm-nvim', {
-  config = function()
-    vim.keymap.set('n', '<leader>tg', ':Lazygit<CR>', { desc = '[T]oggle Lazy [G]it' })
-  end,
-})
-
-lazy.add_plugin('folke/zen-mode.nvim', {
-  config = function()
-    require('editor.config.zen-mode')
   end,
 })
 

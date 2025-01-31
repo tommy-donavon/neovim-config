@@ -2,9 +2,10 @@ local M = {}
 M.loaded = false
 
 local deps = {
+  'fd',
+  'freeze',
   'lazygit',
   'rg',
-  'freeze',
 }
 
 M.check = function()
