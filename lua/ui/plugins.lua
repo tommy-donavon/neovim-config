@@ -21,6 +21,16 @@ lazy.add_plugin('charm-and-friends/freeze.nvim', {
   end,
 })
 
+lazy.add_plugin('nvzone/volt', { lazy = true })
+lazy.add_plugin('nvzone/menu', {
+  config = function()
+    require('ui.config.menu')
+  end,
+})
+lazy.add_plugin('nvzone/minty', {
+  cmd = { 'Shades', 'Huefy' },
+})
+
 lazy.add_plugin('catppuccin/nvim', {
   priority = 1000,
 })

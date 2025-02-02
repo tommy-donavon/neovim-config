@@ -40,7 +40,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
----@diagnostic disable-next-line: unused-local
 local on_attach = function(_, bufnr)
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
@@ -52,6 +51,7 @@ end
 local default_opt = {
   capabilities = capabilities,
   on_attach = on_attach,
+  autostart = true,
   flags = {
     debounce_text_changes = 150,
   },

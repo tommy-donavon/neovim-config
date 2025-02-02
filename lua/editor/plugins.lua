@@ -74,6 +74,7 @@ lazy.add_plugin('neovim/nvim-lspconfig', {
     { 'simrat39/inlay-hints.nvim', lazy = true },
     { 'nvimtools/none-ls.nvim', lazy = true, event = { 'BufReadPost', 'BufNewFile' } },
   },
+  event = { 'BufReadPost', 'BufNewFile', 'BufWinEnter' },
   config = function()
     require('editor.config.lsp')
   end,
