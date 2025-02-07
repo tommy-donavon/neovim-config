@@ -15,9 +15,9 @@ snacks.setup {
     preset = {
       keys = {
         { icon = ' ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
-        { icon = ' ', key = 'p', desc = 'List Projects', action = ':Telescope projects' },
-        { icon = ' ', key = 'f', desc = 'Find File', action = ':Telescope find_files' },
-        { icon = '󰊄 ', key = 't', desc = 'Find Text', action = ':Telescope live_grep' },
+        { icon = ' ', key = 'p', desc = 'List Projects', action = ":lua Snacks.dashboard.pick('projects')" },
+        { icon = ' ', key = 'f', desc = 'Find File', action = ":lua Snacks.dashboard.pick('find_files')" },
+        { icon = '󰊄 ', key = 't', desc = 'Find Text', action = ":lua Snacks.dashboard.pick('live_grep')" },
         { icon = '󰒲 ', key = 'L', desc = 'Lazy', action = ':Lazy', enabled = package.loaded.lazy ~= nil },
         { icon = ' ', key = 'q', desc = 'Quit', action = ':qa' },
       },
@@ -43,11 +43,9 @@ snacks.setup {
     enable = true,
     configure = true,
   },
-
   picker = {
-
     sources = {
-      files = { hidden = true, ignored = true },
+      files = { hidden = true, ignored = false },
     },
 
     toggles = {
@@ -111,8 +109,19 @@ snacks.setup {
   zen = { enable = true },
 }
 
--- keymaps
-vim.keymap.set({ 'v', 'n' }, '<leader>tg', snacks.lazygit.open, { desc = '[T]oggle Lazy [G]it' })
-vim.keymap.set({ 'v', 'n' }, '<leader>tz', snacks.zen.zen, { desc = '[T]oggle [Z]en mode' })
-vim.keymap.set('n', '<leader>tt', snacks.terminal.toggle, { desc = '[T]oggle [T]erminal' })
-vim.keymap.set('n', '<leader>tf', snacks.picker.explorer, { desc = '[T]oggle [F]ile explorer', silent = true })
+-- keymaps --
+
+local pickers = snacks.picker
+
+-- search --
+vim.keymap.set('n', '<leader>sk', pickers.keymaps, { desc = '[s]earch [k]eymaps' })
+vim.keymap.set('n', '<leader>sf', pickers.files, { desc = '[s]earch [f]iles' })
+vim.keymap.set('n', '<leader>sg', pickers.grep, { desc = '[s]earch by [g]rep' })
+vim.keymap.set('n', '<leader>sd', pickers.diagnostics, { desc = '[s]earch [d]iagnostics' })
+vim.keymap.set('n', '<leader>sr', pickers.recent, { desc = '[s]earch [r]ecent files' })
+
+vim.keymap.set('n', '<leader>sh', snacks.picker.help, { desc = '[s]earch [h]elp' })
+vim.keymap.set({ 'v', 'n' }, '<leader>tg', snacks.lazygit.open, { desc = '[t]oggle Lazy [g]it' })
+vim.keymap.set({ 'v', 'n' }, '<leader>tz', snacks.zen.zen, { desc = '[t]oggle [z]en mode' })
+vim.keymap.set('n', '<leader>tt', snacks.terminal.toggle, { desc = '[t]oggle [t]erminal' })
+vim.keymap.set('n', '<leader>tf', snacks.picker.explorer, { desc = '[t]oggle [f]ile explorer', silent = true })

@@ -24,35 +24,14 @@ lazy.add_plugin('folke/snacks.nvim', {
 
 lazy.add_plugin('rcarriga/nvim-notify', {
   event = 'BufRead',
+  config = function()
+    vim.notify = require('notify')
+  end,
 })
 
 lazy.add_plugin('ahmedkhalf/project.nvim', {
   config = function()
     require('editor.config.project')
-  end,
-})
-
-lazy.add_plugin('nvim-telescope/telescope.nvim', {
-  event = 'VimEnter',
-  branch = '0.1.x',
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-    {
-      'nvim-telescope/telescope-fzf-native.nvim',
-
-      build = 'make',
-
-      cond = function()
-        return vim.fn.executable('make') == 1
-      end,
-    },
-    { 'nvim-telescope/telescope-ui-select.nvim' },
-    { 'nvim-tree/nvim-web-devicons' },
-  },
-
-  config = function()
-    ---@diagnostic disable-next-line: different-requires
-    require('editor.config.telescope')
   end,
 })
 
@@ -94,13 +73,13 @@ lazy.add_plugin('folke/which-key.nvim', {
       keys = {},
     },
     spec = {
-      { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-      { '<leader>d', group = '[D]ocument' },
-      { '<leader>r', group = '[R]ename' },
-      { '<leader>s', group = '[S]earch' },
-      { '<leader>w', group = '[W]orkspace' },
-      { '<leader>t', group = '[T]oggle' },
-      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      { '<leader>c', group = '[c]ode', mode = { 'n', 'x' } },
+      { '<leader>d', group = '[d]ocument' },
+      { '<leader>r', group = '[r]ename' },
+      { '<leader>s', group = '[s]earch' },
+      { '<leader>w', group = '[w]orkspace' },
+      { '<leader>t', group = '[t]oggle' },
+      { '<leader>g', group = '[g]it', mode = { 'n', 'v' } },
     },
   },
 })
