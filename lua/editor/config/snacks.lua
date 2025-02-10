@@ -119,6 +119,7 @@ vim.keymap.set('n', '<leader>sf', pickers.files, { desc = '[s]earch [f]iles' })
 vim.keymap.set('n', '<leader>sg', pickers.grep, { desc = '[s]earch by [g]rep' })
 vim.keymap.set('n', '<leader>sd', pickers.diagnostics, { desc = '[s]earch [d]iagnostics' })
 vim.keymap.set('n', '<leader>sr', pickers.recent, { desc = '[s]earch [r]ecent files' })
+vim.keymap.set('n', '<leader><leader>', pickers.buffers, { desc = '[] find existing buffers' })
 
 vim.keymap.set('n', '<leader>sh', snacks.picker.help, { desc = '[s]earch [h]elp' })
 vim.keymap.set({ 'v', 'n' }, '<leader>tg', snacks.lazygit.open, { desc = '[t]oggle Lazy [g]it' })
