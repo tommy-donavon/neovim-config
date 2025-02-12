@@ -41,10 +41,6 @@ lazy.add_plugin('aznhe21/actions-preview.nvim', {
   end,
 })
 
-lazy.add_plugin('nvim-telescope/telescope-file-browser.nvim', {
-  dependencies = { 'nvim-telescope/telescope.nvim' },
-})
-
 lazy.add_plugin('Bilal2453/luvit-meta', { lazy = true })
 
 lazy.add_plugin('neovim/nvim-lspconfig', {
