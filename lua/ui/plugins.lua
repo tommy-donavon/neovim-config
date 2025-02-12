@@ -32,10 +32,15 @@ lazy.add_plugin('nvzone/minty', {
   cmd = { 'Shades', 'Huefy' },
 })
 
-lazy.add_plugin('AlexvZyl/nordic.nvim', {
+lazy.add_plugin('neanias/everforest-nvim', {
+  version = false,
   lazy = false,
   priority = 1000,
   config = function()
-    require('nordic').load()
+    local everforest = require('everforest')
+    everforest.setup {
+      background = 'medium',
+    }
+    everforest.load()
   end,
 })

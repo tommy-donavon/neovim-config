@@ -36,6 +36,7 @@ lazy.add_plugin('ahmedkhalf/project.nvim', {
 })
 
 lazy.add_plugin('aznhe21/actions-preview.nvim', {
+  dependencies = { 'nvim-telescope/telescope.nvim' },
   config = function()
     require('editor.config.actions-preview')
   end,

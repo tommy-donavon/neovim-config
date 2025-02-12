@@ -4,6 +4,7 @@ vim.o.laststatus = 3
 require('lualine').setup {
   options = {
     component_separators = '',
+    theme = 'auto',
     section_separators = { left = '', right = '' },
     globalstatus = true,
     icons_enabled = true,
