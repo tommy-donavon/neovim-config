@@ -174,3 +174,5 @@ lazy.add_plugin('iamcco/markdown-preview.nvim', {
     vim.fn['mkdp#util#install']()
   end,
 })
+
+lazy.add_plugin('pigpigyyy/yuescript-vim')

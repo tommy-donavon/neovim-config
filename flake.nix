@@ -1,12 +1,12 @@
 {
-  description = "neovim config";
+  description = "meatvim";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
   };
 
   outputs =
-    { nixpkgs, ... }:
+    { self, nixpkgs, ... }:
     let
       supportedSystems = [
         "x86_64-linux"
@@ -26,13 +26,15 @@
         );
     in
     {
+      formatter = forEachSupportedSystem ({ pkgs }: pkgs.nixfmt-rfc-style);
       devShells = forEachSupportedSystem (
         { pkgs }:
         {
           default = pkgs.mkShell {
             packages = with pkgs; [
               nil
-              nixfmt-rfc-style
+              self.formatter.${pkgs.stdenv.hostPlatform.system}
+              self.packages.${pkgs.stdenv.hostPlatform.system}.yue
               just
               tokei
               cocogitto
@@ -47,6 +49,12 @@
               cog install-hook --all -o
             '';
           };
+        }
+      );
+      packages = forEachSupportedSystem (
+        { pkgs }:
+        {
+          yue = pkgs.callPackage ./nix/yuescript.nix { };
         }
       );
     };
